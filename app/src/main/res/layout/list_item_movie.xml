@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        app:cardElevation="2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/movie_item_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:imageFromUrl="@{movie.posterUrl}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/movie_item_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{movie.title}"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/movie_item_year"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/movie_item_image"
+                tools:text="Game of Thrones" />
+
+            <TextView
+                android:id="@+id/movie_item_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{movie.year}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/movie_item_title"
+                app:layout_constraintTop_toBottomOf="@id/movie_item_image"
+                tools:text="2011-2019" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <data>
+
+        <variable
+            name="movie"
+            type="com.epam.valkaryne.openmovieapp.data.api.model.MovieDataModel" />
+    </data>
+</layout>
