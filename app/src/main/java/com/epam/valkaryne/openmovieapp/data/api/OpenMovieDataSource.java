@@ -15,6 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 public class OpenMovieDataSource extends RxPagingSource<Integer, MovieInfo> {
 
     private final int OPEN_MOVIE_PAGE_INDEX = 1;
+    private final String EXTENDED_SEARCH_POSTFIX = "*";
 
     private OpenMovieApiService service;
     private QueryModel query;
@@ -33,7 +34,7 @@ public class OpenMovieDataSource extends RxPagingSource<Integer, MovieInfo> {
         }
 
         final Integer finalPage = page;
-        return service.searchMovies(query.getTitle(), query.getType(), query.getYear(), page)
+        return service.searchMovies(query.getTitle() + EXTENDED_SEARCH_POSTFIX, query.getType(), query.getYear(), page)
                 .subscribeOn(Schedulers.io())
                 .map(response -> {
                     if (response.isSuccessful()) {

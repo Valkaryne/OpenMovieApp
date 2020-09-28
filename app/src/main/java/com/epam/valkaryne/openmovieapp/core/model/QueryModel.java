@@ -2,29 +2,27 @@ package com.epam.valkaryne.openmovieapp.core.model;
 
 public final class QueryModel {
 
-    private final String EXTENDED_SEARCH_POSTFIX = "*";
-
     private String title;
     private String year = "";
     private String type = "";
 
     public QueryModel(String title, String year, String type) {
-        this.title = title + EXTENDED_SEARCH_POSTFIX;
+        this.title = title;
         this.year = year;
         this.type = type;
     }
 
     public QueryModel(String title, String year) {
-        this.title = title + EXTENDED_SEARCH_POSTFIX;
+        this.title = title;
         this.year = year;
     }
 
     public QueryModel(String title) {
-        this.title = title + EXTENDED_SEARCH_POSTFIX;
+        this.title = title;
     }
 
     public void setTitle(String title) {
-        this.title = title + EXTENDED_SEARCH_POSTFIX;
+        this.title = title;
     }
 
     public void setYear(String year) {
@@ -45,5 +43,10 @@ public final class QueryModel {
 
     public String getType() {
         return type;
+    }
+
+    @Override
+    public String toString() {
+        return title + "_" + year + "_" + type;
     }
 }

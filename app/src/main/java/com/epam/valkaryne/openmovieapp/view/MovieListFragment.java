@@ -38,7 +38,7 @@ public class MovieListFragment extends Fragment {
             return binding.getRoot();
         }
 
-        viewModel = new ViewModelProvider(this, Injection.provideViewModelFactory())
+        viewModel = new ViewModelProvider(this, Injection.provideViewModelFactory(getContext()))
                 .get(SearchMoviesViewModel.class);
 
         binding.list.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
@@ -62,13 +62,15 @@ public class MovieListFragment extends Fragment {
                         @Override
                         public void performSearch(QueryModel queryModel) {
                             searchMovies(queryModel);
+                            viewModel.saveQueryHistory(queryModel);
                         }
 
                         @Override
                         public void clearHistory() {
-                            // TODO: Clear searching history
+                            viewModel.clearQueryHistory();
                         }
-                    }
+                    },
+                    viewModel.getQueryHistory()
             );
             return true;
         } else {

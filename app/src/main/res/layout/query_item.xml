@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="query"
+            type="com.epam.valkaryne.openmovieapp.core.model.QueryModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/query_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{query.title}"
+            android:textAppearance="?android:attr/textAppearanceListItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Game of Thrones" />
+
+        <TextView
+            android:id="@+id/query_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{query.type}"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintEnd_toStartOf="@id/query_year"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/query_title"
+            tools:text="series" />
+
+        <TextView
+            android:id="@+id/query_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{query.year}"
+            android:textAlignment="viewEnd"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/query_type"
+            app:layout_constraintTop_toBottomOf="@id/query_title"
+            tools:text="2011" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
