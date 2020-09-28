@@ -1,6 +1,9 @@
 package com.epam.valkaryne.openmovieapp.core.model;
 
-public final class QueryModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public final class QueryModel implements Parcelable {
 
     private String title;
     private String year = "";
@@ -20,6 +23,36 @@ public final class QueryModel {
     public QueryModel(String title) {
         this.title = title;
     }
+
+    protected QueryModel(Parcel in) {
+        title = in.readString();
+        year = in.readString();
+        type = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(year);
+        dest.writeString(type);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<QueryModel> CREATOR = new Creator<QueryModel>() {
+        @Override
+        public QueryModel createFromParcel(Parcel in) {
+            return new QueryModel(in);
+        }
+
+        @Override
+        public QueryModel[] newArray(int size) {
+            return new QueryModel[size];
+        }
+    };
 
     public void setTitle(String title) {
         this.title = title;

@@ -34,6 +34,7 @@
                 android:dropDownAnchor="@id/layout_search_input"
                 android:dropDownWidth="wrap_content"
                 android:hint="@string/search_title_hint"
+                android:imeOptions="actionDone"
                 android:inputType="textAutoComplete"
                 android:paddingTop="4dp"
                 android:singleLine="true" />

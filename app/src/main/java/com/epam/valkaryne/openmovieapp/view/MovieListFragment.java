@@ -25,6 +25,8 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class MovieListFragment extends Fragment {
 
+    private final String LAST_SEARCH_QUERY = "last_search_query";
+
     private CompositeDisposable disposable = new CompositeDisposable();
 
     private SearchMoviesViewModel viewModel;
@@ -46,6 +48,16 @@ public class MovieListFragment extends Fragment {
 
         setHasOptionsMenu(true);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        QueryModel restoredQuery = savedInstanceState != null ? savedInstanceState.getParcelable(LAST_SEARCH_QUERY) : null;
+        if (restoredQuery != null) {
+            searchMovies(restoredQuery);
+        }
     }
 
     @Override
@@ -84,5 +96,19 @@ public class MovieListFragment extends Fragment {
                         .subscribe(movieDataModelPagingData ->
                                 adapter.submitData(getLifecycle(), movieDataModelPagingData))
         );
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (viewModel.getLastQuery() != null) {
+            outState.putParcelable(LAST_SEARCH_QUERY, viewModel.getLastQuery());
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        disposable.dispose();
     }
 }

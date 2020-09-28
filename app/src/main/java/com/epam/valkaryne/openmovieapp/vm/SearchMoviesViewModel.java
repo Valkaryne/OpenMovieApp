@@ -24,6 +24,8 @@ public class SearchMoviesViewModel extends ViewModel {
     private final SaveQueryHistoryUseCase saveQueryHistoryUseCase;
     private final ClearQueryHistoryUseCase clearQueryHistoryUseCase;
 
+    private QueryModel lastQuery = null;
+
     private MutableLiveData<List<QueryModel>> _queryHistory = new MutableLiveData<>();
 
     public SearchMoviesViewModel(SearchMoviesUseCase searchMoviesUseCase,
@@ -37,13 +39,9 @@ public class SearchMoviesViewModel extends ViewModel {
     }
 
     public Observable<PagingData<MovieInfo>> searchMovies(QueryModel query) {
+        lastQuery = query;
         return searchMoviesUseCase.executeUseCase(query)
                 .cache();
-    }
-
-    private void updateQueryHistory() {
-        List<QueryModel> history = getQueryHistoryUseCase.executeUseCase();
-        _queryHistory.setValue(history);
     }
 
     public LiveData<List<QueryModel>> getQueryHistory() {
@@ -58,5 +56,14 @@ public class SearchMoviesViewModel extends ViewModel {
     public void clearQueryHistory() {
         clearQueryHistoryUseCase.executeUseCase();
         updateQueryHistory();
+    }
+
+    public QueryModel getLastQuery() {
+        return lastQuery;
+    }
+
+    private void updateQueryHistory() {
+        List<QueryModel> history = getQueryHistoryUseCase.executeUseCase();
+        _queryHistory.setValue(history);
     }
 }
