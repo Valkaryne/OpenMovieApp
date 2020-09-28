@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/dialog_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/search_input_prompt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_search_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialog_label">
+
+            <AutoCompleteTextView
+                android:id="@+id/search_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                android:dropDownAnchor="@id/layout_search_input"
+                android:dropDownWidth="wrap_content"
+                android:hint="@string/search_title_hint"
+                android:inputType="textAutoComplete"
+                android:paddingTop="4dp"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <EditText
+            android:id="@+id/search_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_year_hint"
+            android:inputType="number"
+            app:layout_constraintBottom_toTopOf="@id/search_perform_button"
+            app:layout_constraintEnd_toStartOf="@id/search_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_search_input" />
+
+        <Spinner
+            android:id="@+id/search_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/search_year"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/search_year"
+            app:layout_constraintTop_toTopOf="@id/search_year" />
+
+        <Button
+            android:id="@+id/search_perform_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/perform_search_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/search_clear_button" />
+
+        <Button
+            android:id="@+id/search_clear_button"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/clear_history_text"
+            app:layout_constraintBottom_toBottomOf="@id/search_perform_button"
+            app:layout_constraintEnd_toStartOf="@id/search_perform_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/search_perform_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

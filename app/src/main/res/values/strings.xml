@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">OpenMovieApp</string>
+
+    <string name="search_input_prompt">Please, input your search parameters:</string>
+    <string name="search_title_hint">Title</string>
+    <string name="search_year_hint">Year</string>
+    <string name="perform_search_text">Search</string>
+    <string name="clear_history_text">Clear history</string>
+    <string name="search_movies_menu_title">Search movies</string>
 </resources>
