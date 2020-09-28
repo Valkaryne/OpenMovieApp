@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * A class that represents a movie from OMDB API.
  */
-public final class MovieDataModel {
+public final class MovieInfo {
 
     @SerializedName("imdbID")
     private String imdbID;
@@ -21,7 +21,7 @@ public final class MovieDataModel {
     @SerializedName("Poster")
     private String posterUrl;
 
-    public MovieDataModel(String imdbID, String title, String year, String posterUrl) {
+    public MovieInfo(String imdbID, String title, String year, String posterUrl) {
         this.imdbID = imdbID;
         this.title = title;
         this.year = year;
@@ -48,7 +48,7 @@ public final class MovieDataModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MovieDataModel that = (MovieDataModel) o;
+        MovieInfo that = (MovieInfo) o;
         return imdbID.equals(that.imdbID) &&
                 title.equals(that.title) &&
                 year.equals(that.year) &&

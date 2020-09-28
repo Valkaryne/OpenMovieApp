@@ -53,6 +53,6 @@
 
         <variable
             name="movie"
-            type="com.epam.valkaryne.openmovieapp.data.api.model.MovieDataModel" />
+            type="com.epam.valkaryne.openmovieapp.data.api.model.MovieInfo" />
     </data>
 </layout>

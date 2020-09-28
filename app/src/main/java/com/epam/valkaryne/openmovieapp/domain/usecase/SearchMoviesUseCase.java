@@ -2,7 +2,8 @@ package com.epam.valkaryne.openmovieapp.domain.usecase;
 
 import androidx.paging.PagingData;
 
-import com.epam.valkaryne.openmovieapp.data.api.model.MovieDataModel;
+import com.epam.valkaryne.openmovieapp.core.model.QueryModel;
+import com.epam.valkaryne.openmovieapp.data.api.model.MovieInfo;
 import com.epam.valkaryne.openmovieapp.domain.OpenMovieRepository;
 
 import io.reactivex.Observable;
@@ -15,7 +16,7 @@ public class SearchMoviesUseCase {
         this.openMovieRepository = openMovieRepository;
     }
 
-    public Observable<PagingData<MovieDataModel>> executeUseCase(String query) {
+    public Observable<PagingData<MovieInfo>> executeUseCase(QueryModel query) {
         return openMovieRepository.getSearchResult(query);
     }
 }

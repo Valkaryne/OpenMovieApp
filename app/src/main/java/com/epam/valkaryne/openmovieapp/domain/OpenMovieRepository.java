@@ -2,11 +2,12 @@ package com.epam.valkaryne.openmovieapp.domain;
 
 import androidx.paging.PagingData;
 
-import com.epam.valkaryne.openmovieapp.data.api.model.MovieDataModel;
+import com.epam.valkaryne.openmovieapp.core.model.QueryModel;
+import com.epam.valkaryne.openmovieapp.data.api.model.MovieInfo;
 
 import io.reactivex.Observable;
 
 public interface OpenMovieRepository {
 
-    Observable<PagingData<MovieDataModel>> getSearchResult(String query);
+    Observable<PagingData<MovieInfo>> getSearchResult(QueryModel query);
 }

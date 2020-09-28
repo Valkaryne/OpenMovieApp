@@ -7,4 +7,11 @@
     <string name="perform_search_text">Search</string>
     <string name="clear_history_text">Clear history</string>
     <string name="search_movies_menu_title">Search movies</string>
+
+    <string-array name="search_movies_types">
+        <item>any</item>
+        <item>movie</item>
+        <item>series</item>
+        <item>game</item>
+    </string-array>
 </resources>

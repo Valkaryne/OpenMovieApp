@@ -13,7 +13,7 @@ public final class OpenMovieSearchResponse {
 
     @Nullable
     @SerializedName("Search")
-    private List<MovieDataModel> searchResults;
+    private List<MovieInfo> searchResults;
 
     @SerializedName("totalResults")
     private int totalResults;
@@ -22,7 +22,7 @@ public final class OpenMovieSearchResponse {
     @SerializedName("Error")
     private String error;
 
-    public OpenMovieSearchResponse(boolean successful, @Nullable List<MovieDataModel> searchResults, @Nullable String error) {
+    public OpenMovieSearchResponse(boolean successful, @Nullable List<MovieInfo> searchResults, @Nullable String error) {
         this.successful = successful;
         this.searchResults = searchResults;
         this.error = error;
@@ -33,7 +33,7 @@ public final class OpenMovieSearchResponse {
     }
 
     @Nullable
-    public List<MovieDataModel> getSearchResults() {
+    public List<MovieInfo> getSearchResults() {
         return searchResults;
     }
 

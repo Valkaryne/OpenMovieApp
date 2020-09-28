@@ -2,40 +2,40 @@ package com.epam.valkaryne.openmovieapp.data.api;
 
 import androidx.paging.rxjava2.RxPagingSource;
 
-import com.epam.valkaryne.openmovieapp.data.api.model.MovieDataModel;
+import com.epam.valkaryne.openmovieapp.core.model.QueryModel;
+import com.epam.valkaryne.openmovieapp.data.api.model.MovieInfo;
 import com.epam.valkaryne.openmovieapp.data.api.model.OpenMovieSearchResponse;
 import com.epam.valkaryne.openmovieapp.data.api.retrofit.OpenMovieApiService;
 
 import org.jetbrains.annotations.NotNull;
 
 import io.reactivex.Single;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class OpenMovieDataSource extends RxPagingSource<Integer, MovieDataModel> {
+public class OpenMovieDataSource extends RxPagingSource<Integer, MovieInfo> {
 
     private final int OPEN_MOVIE_PAGE_INDEX = 1;
 
     private OpenMovieApiService service;
-    private String query;
+    private QueryModel query;
 
-    public OpenMovieDataSource(OpenMovieApiService service, String query) {
+    public OpenMovieDataSource(OpenMovieApiService service, QueryModel query) {
         this.service = service;
         this.query = query;
     }
 
     @NotNull
     @Override
-    public Single<LoadResult<Integer, MovieDataModel>> loadSingle(@NotNull LoadParams<Integer> loadParams) {
+    public Single<LoadResult<Integer, MovieInfo>> loadSingle(@NotNull LoadParams<Integer> loadParams) {
         Integer page = loadParams.getKey();
         if (page == null) {
             page = OPEN_MOVIE_PAGE_INDEX;
         }
 
         final Integer finalPage = page;
-        return service.searchMovies("gam*", "", "2020", page)
+        return service.searchMovies(query.getTitle(), query.getType(), query.getYear(), page)
                 .subscribeOn(Schedulers.io())
-                .map((Function<OpenMovieSearchResponse, LoadResult<Integer, MovieDataModel>>) response -> {
+                .map(response -> {
                     if (response.isSuccessful()) {
                         return toPage(response, finalPage);
                     } else {
@@ -45,12 +45,12 @@ public class OpenMovieDataSource extends RxPagingSource<Integer, MovieDataModel>
                 .onErrorReturn(LoadResult.Error::new);
     }
 
-    private LoadResult<Integer, MovieDataModel> toError(OpenMovieSearchResponse response) {
+    private LoadResult<Integer, MovieInfo> toError(OpenMovieSearchResponse response) {
         Exception error = new Exception(response.getError());
         return new LoadResult.Error<>(error);
     }
 
-    private LoadResult<Integer, MovieDataModel> toPage(OpenMovieSearchResponse response, int page) {
+    private LoadResult<Integer, MovieInfo> toPage(OpenMovieSearchResponse response, int page) {
         return new LoadResult.Page<>(
                 response.getSearchResults(),
                 page == OPEN_MOVIE_PAGE_INDEX ? null : page - 1,

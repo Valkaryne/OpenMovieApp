@@ -12,11 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.epam.valkaryne.openmovieapp.Injection;
 import com.epam.valkaryne.openmovieapp.R;
+import com.epam.valkaryne.openmovieapp.core.model.QueryModel;
 import com.epam.valkaryne.openmovieapp.databinding.FragmentMovieListBinding;
 import com.epam.valkaryne.openmovieapp.view.adapter.MoviesAdapter;
 import com.epam.valkaryne.openmovieapp.vm.SearchMoviesViewModel;
@@ -27,6 +27,9 @@ public class MovieListFragment extends Fragment {
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
+    private SearchMoviesViewModel viewModel;
+    private MoviesAdapter adapter = new MoviesAdapter();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,19 +38,11 @@ public class MovieListFragment extends Fragment {
             return binding.getRoot();
         }
 
-        SearchMoviesViewModel viewModel = new ViewModelProvider(this, Injection.provideViewModelFactory())
+        viewModel = new ViewModelProvider(this, Injection.provideViewModelFactory())
                 .get(SearchMoviesViewModel.class);
-
-        MoviesAdapter adapter = new MoviesAdapter();
 
         binding.list.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         binding.list.setAdapter(adapter);
-
-        disposable.add(
-                viewModel.searchMovies("gam*")
-                        .subscribe(movieDataModelPagingData
-                                -> adapter.submitData(getLifecycle(), movieDataModelPagingData))
-        );
 
         setHasOptionsMenu(true);
         return binding.getRoot();
@@ -61,11 +56,31 @@ public class MovieListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.search_movies) {
-            NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_movieListFragment_to_searchDialog);
+            SearchDialog.show(
+                    getParentFragmentManager(),
+                    new SearchDialog.OnDialogInteraction() {
+                        @Override
+                        public void performSearch(QueryModel queryModel) {
+                            searchMovies(queryModel);
+                        }
+
+                        @Override
+                        public void clearHistory() {
+                            // TODO: Clear searching history
+                        }
+                    }
+            );
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void searchMovies(QueryModel queryModel) {
+        disposable.add(
+                viewModel.searchMovies(queryModel)
+                        .subscribe(movieDataModelPagingData ->
+                                adapter.submitData(getLifecycle(), movieDataModelPagingData))
+        );
     }
 }

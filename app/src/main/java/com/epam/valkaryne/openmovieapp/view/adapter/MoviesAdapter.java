@@ -7,10 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.paging.PagingDataAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.epam.valkaryne.openmovieapp.data.api.model.MovieDataModel;
+import com.epam.valkaryne.openmovieapp.data.api.model.MovieInfo;
 import com.epam.valkaryne.openmovieapp.databinding.ListItemMovieBinding;
 
-public class MoviesAdapter extends PagingDataAdapter<MovieDataModel, MoviesAdapter.MovieViewHolder> {
+public class MoviesAdapter extends PagingDataAdapter<MovieInfo, MoviesAdapter.MovieViewHolder> {
 
     public MoviesAdapter() {
         super(new MoviesDiffCallback());
@@ -30,7 +30,7 @@ public class MoviesAdapter extends PagingDataAdapter<MovieDataModel, MoviesAdapt
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        MovieDataModel movie = getItem(position);
+        MovieInfo movie = getItem(position);
         if (movie != null) {
             holder.bind(movie);
         }
@@ -45,7 +45,7 @@ public class MoviesAdapter extends PagingDataAdapter<MovieDataModel, MoviesAdapt
             this.binding = binding;
         }
 
-        public void bind(MovieDataModel item) {
+        public void bind(MovieInfo item) {
             binding.setMovie(item);
             binding.executePendingBindings();
         }

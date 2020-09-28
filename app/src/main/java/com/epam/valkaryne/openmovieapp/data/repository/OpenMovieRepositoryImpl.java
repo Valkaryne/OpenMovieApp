@@ -5,8 +5,9 @@ import androidx.paging.PagingConfig;
 import androidx.paging.PagingData;
 import androidx.paging.rxjava2.PagingRx;
 
+import com.epam.valkaryne.openmovieapp.core.model.QueryModel;
 import com.epam.valkaryne.openmovieapp.data.api.OpenMovieDataSource;
-import com.epam.valkaryne.openmovieapp.data.api.model.MovieDataModel;
+import com.epam.valkaryne.openmovieapp.data.api.model.MovieInfo;
 import com.epam.valkaryne.openmovieapp.data.api.retrofit.OpenMovieApiService;
 import com.epam.valkaryne.openmovieapp.domain.OpenMovieRepository;
 
@@ -24,7 +25,7 @@ public class OpenMovieRepositoryImpl implements OpenMovieRepository {
     }
 
     @Override
-    public Observable<PagingData<MovieDataModel>> getSearchResult(final String query) {
+    public Observable<PagingData<MovieInfo>> getSearchResult(final QueryModel query) {
         return PagingRx.getObservable(
                 new Pager(
                         new PagingConfig(NETWORK_PAGE_SIZE, PREFETCH_DISTANCE, false),
