@@ -53,23 +53,28 @@ class MovieListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.search_movies -> {
-                SearchDialog.show(
-                    parentFragmentManager,
-                    object : SearchDialog.OnDialogInteraction {
-                        override fun performSearch(queryModel: QueryModel) {
-                            searchMovies(queryModel)
-                            viewModel.saveQueryHistory(queryModel)
-                        }
-
-                        override fun clearHistory() {
-                            viewModel.clearQueryHistory()
-                        }
-                    }, viewModel.queryHistory
-                )
+                showSearchDialog()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showSearchDialog() {
+        SearchDialog.show(
+            parentFragmentManager,
+            object : SearchDialog.OnDialogInteraction {
+                override fun performSearch(queryModel: QueryModel) {
+                    searchMovies(queryModel)
+                    viewModel.saveQueryHistory(queryModel)
+                }
+
+                override fun clearHistory() {
+                    viewModel.clearQueryHistory()
+                }
+            },
+            viewModel.queryHistory
+        )
     }
 
     private fun searchMovies(queryModel: QueryModel) {

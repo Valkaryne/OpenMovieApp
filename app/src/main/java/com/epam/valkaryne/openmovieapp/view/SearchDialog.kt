@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.ArrayAdapter
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
@@ -29,6 +30,10 @@ class SearchDialog(
         DialogSearchBinding.inflate(LayoutInflater.from(context))
     }
 
+    private val historyAdapter: QueryHistoryAdapter by lazy {
+        QueryHistoryAdapter(requireContext())
+    }
+
     private val movieTypes: Array<String> by lazy {
         resources.getStringArray(R.array.search_movies_types)
     }
@@ -40,31 +45,12 @@ class SearchDialog(
                 android.R.layout.simple_spinner_dropdown_item
             )
             movieTypesAdapter.addAll(*movieTypes)
-            val historyAdapter = QueryHistoryAdapter(requireContext())
 
             with(binding) {
                 searchType.adapter = movieTypesAdapter
                 searchInput.setAdapter(historyAdapter)
 
-                searchInput.setOnTouchListener { _, motionEvent ->
-                    if (motionEvent.action == MotionEvent.ACTION_DOWN) {
-                        searchInput.showDropDown()
-                    }
-                    false
-                }
-                searchInput.setOnItemClickListener { adapterView, view, position, l ->
-                    historyAdapter.getItem(position)?.let { item ->
-                        if (item.type.isNotEmpty()) {
-                            movieTypes.forEach { type ->
-                                if (item.type == type) {
-                                    searchType.setSelection(movieTypes.indexOf(type))
-                                }
-                            }
-                        }
-                        searchYear.setText(item.year)
-                        searchInput.setText(item.title)
-                    }
-                }
+                setAutoCompleteListeners()
 
                 searchPerformButton.setOnClickListener {
                     dismiss()
@@ -81,6 +67,35 @@ class SearchDialog(
                 })
             }
         }.create()
+    }
+
+    private fun setAutoCompleteListeners() {
+        with(binding) {
+            searchInput.setOnTouchListener { _, motionEvent ->
+                if (motionEvent.action == MotionEvent.ACTION_DOWN) {
+                    searchInput.showDropDown()
+                }
+                false
+            }
+
+            searchInput.setOnItemClickListener { _, _, position, _ ->
+                historyAdapter.getItem(position).let { item ->
+                    if (item.type.isNotEmpty()) {
+                        movieTypes.forEach { type ->
+                            if (item.type == type) {
+                                searchType.setSelection(movieTypes.indexOf(type))
+                            }
+                        }
+                    }
+                    searchYear.setText(item.year)
+                    searchInput.setText(item.title)
+                }
+            }
+
+            searchInput.doAfterTextChanged { text ->
+                searchPerformButton.isEnabled = text?.length ?: 0 >= 3
+            }
+        }
     }
 
     private fun assembleQueryModel(): QueryModel {
