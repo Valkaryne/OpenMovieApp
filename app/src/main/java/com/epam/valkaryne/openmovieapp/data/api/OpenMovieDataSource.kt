@@ -1,7 +1,7 @@
 package com.epam.valkaryne.openmovieapp.data.api
 
 import androidx.paging.PagingSource
-import com.epam.valkaryne.openmovieapp.core.model.QueryModel
+import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.data.api.model.MovieInfo
 import com.epam.valkaryne.openmovieapp.data.api.model.OpenMovieSearchResponse
 import com.epam.valkaryne.openmovieapp.data.api.retrofit.OpenMovieApiService

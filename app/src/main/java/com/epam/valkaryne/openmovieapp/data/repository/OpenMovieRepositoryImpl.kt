@@ -3,7 +3,7 @@ package com.epam.valkaryne.openmovieapp.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.epam.valkaryne.openmovieapp.core.model.QueryModel
+import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.data.api.OpenMovieDataSource
 import com.epam.valkaryne.openmovieapp.data.api.model.MovieInfo
 import com.epam.valkaryne.openmovieapp.data.api.retrofit.OpenMovieApiService

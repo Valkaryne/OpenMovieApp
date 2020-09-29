@@ -7,7 +7,7 @@
 
         <variable
             name="query"
-            type="com.epam.valkaryne.openmovieapp.core.model.QueryModel" />
+            type="com.epam.valkaryne.openmovieapp.common.QueryModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

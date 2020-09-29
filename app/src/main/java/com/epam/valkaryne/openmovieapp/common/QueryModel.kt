@@ -1,4 +1,4 @@
-package com.epam.valkaryne.openmovieapp.core.model
+package com.epam.valkaryne.openmovieapp.common
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

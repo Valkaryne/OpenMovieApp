@@ -3,24 +3,23 @@ package com.epam.valkaryne.openmovieapp.view
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.epam.valkaryne.openmovieapp.Injection
 import com.epam.valkaryne.openmovieapp.R
-import com.epam.valkaryne.openmovieapp.core.model.QueryModel
+import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.databinding.FragmentMovieListBinding
 import com.epam.valkaryne.openmovieapp.view.adapter.MoviesAdapter
 import com.epam.valkaryne.openmovieapp.vm.SearchMoviesViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieListFragment : Fragment() {
 
     private var searchJob: Job? = null
 
-    private lateinit var viewModel: SearchMoviesViewModel
+    private val viewModel: SearchMoviesViewModel by viewModel()
     private val adapter = MoviesAdapter()
 
     override fun onCreateView(
@@ -30,11 +29,6 @@ class MovieListFragment : Fragment() {
     ): View? {
         val binding = FragmentMovieListBinding.inflate(inflater, container, false)
         context ?: return binding.root
-
-        viewModel =
-            ViewModelProvider(this, Injection.provideViewModelFactory(requireContext())).get(
-                SearchMoviesViewModel::class.java
-            )
 
         binding.list.layoutManager =
             StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)

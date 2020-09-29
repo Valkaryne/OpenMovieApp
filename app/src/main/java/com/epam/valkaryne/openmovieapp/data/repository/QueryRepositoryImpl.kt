@@ -2,7 +2,7 @@ package com.epam.valkaryne.openmovieapp.data.repository
 
 import android.content.Context
 import androidx.core.content.edit
-import com.epam.valkaryne.openmovieapp.core.model.QueryModel
+import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.domain.QueryRepository
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException

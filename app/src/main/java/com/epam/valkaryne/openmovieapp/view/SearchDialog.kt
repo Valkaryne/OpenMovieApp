@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import com.epam.valkaryne.openmovieapp.R
-import com.epam.valkaryne.openmovieapp.core.model.QueryModel
+import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.databinding.DialogSearchBinding
 import com.epam.valkaryne.openmovieapp.view.adapter.QueryHistoryAdapter
 

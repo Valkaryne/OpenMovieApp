@@ -8,7 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
-import com.epam.valkaryne.openmovieapp.core.model.QueryModel
+import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.databinding.QueryItemBinding
 
 class QueryHistoryAdapter(private val context: Context) : BaseAdapter(), Filterable {

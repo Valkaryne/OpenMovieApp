@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.epam.valkaryne.openmovieapp.core.model.QueryModel
+import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.data.api.model.MovieInfo
 import com.epam.valkaryne.openmovieapp.domain.usecase.ClearQueryHistoryUseCase
 import com.epam.valkaryne.openmovieapp.domain.usecase.GetQueryHistoryUseCase

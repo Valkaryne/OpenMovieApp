@@ -1,6 +1,6 @@
 package com.epam.valkaryne.openmovieapp.domain
 
-import com.epam.valkaryne.openmovieapp.core.model.QueryModel
+import com.epam.valkaryne.openmovieapp.common.QueryModel
 
 interface QueryRepository {
 
