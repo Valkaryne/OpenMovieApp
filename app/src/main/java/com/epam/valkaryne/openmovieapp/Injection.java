@@ -14,11 +14,11 @@ import com.epam.valkaryne.openmovieapp.domain.usecase.GetQueryHistoryUseCase;
 import com.epam.valkaryne.openmovieapp.domain.usecase.SaveQueryHistoryUseCase;
 import com.epam.valkaryne.openmovieapp.domain.usecase.SearchMoviesUseCase;
 import com.epam.valkaryne.openmovieapp.vm.ViewModelFactory;
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class Injection {
@@ -77,7 +77,7 @@ public final class Injection {
                 .baseUrl(URL_BASE)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory.create())
                 .build();
     }
 }
