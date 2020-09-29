@@ -15,6 +15,9 @@ import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.databinding.DialogSearchBinding
 import com.epam.valkaryne.openmovieapp.view.adapter.QueryHistoryAdapter
 
+/**
+ * Dialog that allows user to input desired search parameters, perform search and clear search history
+ */
 class SearchDialog(
     private val onDialogInteraction: OnDialogInteraction,
     private val queryHistory: LiveData<List<QueryModel>>

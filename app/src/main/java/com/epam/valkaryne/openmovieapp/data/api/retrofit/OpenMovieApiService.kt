@@ -4,6 +4,11 @@ import com.epam.valkaryne.openmovieapp.data.api.model.OpenMovieSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+/**
+ * Retrofit service that works with API
+ *
+ * ! Please, enter you api-key instead of <your_key> substring !
+ */
 interface OpenMovieApiService {
 
     @GET("?apikey=<your_key>")

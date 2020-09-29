@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.epam.valkaryne.openmovieapp.data.api.model.MovieInfo
 import com.epam.valkaryne.openmovieapp.databinding.ListItemMovieBinding
 
+/**
+ * Adapter for the list of movies
+ */
 class MoviesAdapter :
     PagingDataAdapter<MovieInfo, MoviesAdapter.MovieViewHolder>(MoviesDiffCallback()) {
 

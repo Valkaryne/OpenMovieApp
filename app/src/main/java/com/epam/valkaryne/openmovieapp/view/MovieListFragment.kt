@@ -15,6 +15,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+/**
+ * Fragment that shows to user a list of movies which could be found by searching in OMDB API
+ */
 class MovieListFragment : Fragment() {
 
     private var searchJob: Job? = null

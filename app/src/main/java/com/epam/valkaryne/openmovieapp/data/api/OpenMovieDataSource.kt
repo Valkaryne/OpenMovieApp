@@ -8,6 +8,9 @@ import com.epam.valkaryne.openmovieapp.data.api.retrofit.OpenMovieApiService
 
 private const val OPEN_MOVIE_STARTING_PAGE_INDEX = 1
 
+/**
+ * Data source to send queries to API and to get response from
+ */
 class OpenMovieDataSource(private val service: OpenMovieApiService, private val query: QueryModel) :
     PagingSource<Int, MovieInfo>() {
 

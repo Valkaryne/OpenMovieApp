@@ -11,6 +11,9 @@ import androidx.databinding.DataBindingUtil
 import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.databinding.QueryItemBinding
 
+/**
+ * Adapter for the list of previous user's queries
+ */
 class QueryHistoryAdapter(private val context: Context) : BaseAdapter(), Filterable {
 
     var items: List<QueryModel> = listOf()

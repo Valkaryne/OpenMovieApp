@@ -14,6 +14,9 @@ import com.epam.valkaryne.openmovieapp.domain.usecase.SaveQueryHistoryUseCase
 import com.epam.valkaryne.openmovieapp.domain.usecase.SearchMoviesUseCase
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * ViewModel that works with searching movies in OMDB API
+ */
 class SearchMoviesViewModel(
     private val searchMoviesUseCase: SearchMoviesUseCase,
     private val getQueryHistoryUseCase: GetQueryHistoryUseCase,
@@ -31,15 +34,29 @@ class SearchMoviesViewModel(
             return _queryHistory
         }
 
+    /**
+     * Searches movies by query
+     *
+     * @param query a query
+     * @return flow data with movies list
+     */
     fun searchMovies(query: QueryModel): Flow<PagingData<MovieInfo>> {
         lastQuery = query
         return searchMoviesUseCase.executeUseCase(query).cachedIn(viewModelScope)
     }
 
+    /**
+     * Saves the query in history
+     *
+     * @param query a query to save
+     */
     fun saveQueryHistory(query: QueryModel) {
         saveQueryHistoryUseCase.executeUseCase(query)
     }
 
+    /**
+     * Clears the history of queries
+     */
     fun clearQueryHistory() {
         clearQueryHistoryUseCase.executeUseCase()
         updateQueryHistory()
