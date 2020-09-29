@@ -2,8 +2,11 @@ package com.epam.valkaryne.openmovieapp.view
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.epam.valkaryne.openmovieapp.R
 import com.epam.valkaryne.openmovieapp.common.QueryModel
@@ -22,6 +25,7 @@ class MovieListFragment : Fragment() {
 
     private var searchJob: Job? = null
 
+    private lateinit var binding: FragmentMovieListBinding
     private val viewModel: SearchMoviesViewModel by viewModel()
     private val adapter = MoviesAdapter()
 
@@ -30,12 +34,14 @@ class MovieListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        binding = FragmentMovieListBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
         binding.list.layoutManager =
             StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         binding.list.adapter = adapter
+
+        configAdapter()
 
         setHasOptionsMenu(true)
         return binding.root
@@ -63,6 +69,20 @@ class MovieListFragment : Fragment() {
         }
     }
 
+    private fun configAdapter() {
+        adapter.addLoadStateListener { loadState ->
+            binding.list.isVisible = loadState.source.refresh is LoadState.NotLoading
+            binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+
+            val errorState = loadState.source.append as? LoadState.Error
+                ?: loadState.source.prepend as? LoadState.Error
+                ?: loadState.prepend as? LoadState.Error
+            errorState?.let {
+                Toast.makeText(context, "${it.error.message}", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     private fun showSearchDialog() {
         SearchDialog.show(
             parentFragmentManager,
@@ -84,6 +104,7 @@ class MovieListFragment : Fragment() {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
             viewModel.searchMovies(queryModel).collectLatest { movies ->
+                binding.promptTv.isVisible = false
                 adapter.submitData(movies)
             }
         }

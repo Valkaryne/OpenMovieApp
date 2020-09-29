@@ -36,6 +36,6 @@ class OpenMovieDataSource(private val service: OpenMovieApiService, private val 
         LoadResult.Page(
             data = response.searchResults ?: emptyList(),
             prevKey = if (page == OPEN_MOVIE_STARTING_PAGE_INDEX) null else page - 1,
-            nextKey = if (response.searchResults?.isNullOrEmpty() != false) null else page + 1
+            nextKey = if (page == response.totalResults / 10 + 1) null else page + 1
         )
 }

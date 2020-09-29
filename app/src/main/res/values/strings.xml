@@ -7,6 +7,7 @@
     <string name="perform_search_text">Search</string>
     <string name="clear_history_text">Clear history</string>
     <string name="search_movies_menu_title">Search movies</string>
+    <string name="starting_prompt">Welcome to the OpenMovieApp!\nPlease, go to search menu to start.</string>
 
     <string-array name="search_movies_types">
         <item>any</item>
