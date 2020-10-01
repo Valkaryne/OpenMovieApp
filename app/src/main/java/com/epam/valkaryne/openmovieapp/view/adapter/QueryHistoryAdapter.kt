@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.databinding.DataBindingUtil
+import androidx.viewbinding.ViewBinding
 import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.databinding.QueryItemBinding
 
@@ -30,11 +30,14 @@ class QueryHistoryAdapter(private val context: Context) : BaseAdapter(), Filtera
 
     override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
         val binding = if (view != null) {
-            checkNotNull(DataBindingUtil.getBinding(view))
+            checkNotNull(QueryItemBinding.bind(view))
         } else QueryItemBinding.inflate(
             LayoutInflater.from(context), viewGroup, false
         )
-        binding.query = items[position]
+        val item = items[position]
+        binding.queryTitle.text = item.title
+        binding.queryType.text = item.type
+        binding.queryYear.text = item.year
         return binding.root
     }
 

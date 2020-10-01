@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.epam.valkaryne.openmovieapp.common.loadImageFromUrl
 import com.epam.valkaryne.openmovieapp.data.api.model.MovieInfo
 import com.epam.valkaryne.openmovieapp.databinding.ListItemMovieBinding
 
@@ -33,8 +34,9 @@ class MoviesAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MovieInfo) {
-            binding.movie = item
-            binding.executePendingBindings()
+            binding.movieItemTitle.text = item.title
+            binding.movieItemYear.text = item.year
+            binding.movieItemImage.loadImageFromUrl(item.posterUrl)
         }
     }
 }

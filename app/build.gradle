@@ -7,8 +7,8 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
-    buildFeatures {
-        dataBinding = true
+    viewBinding {
+        enabled = true
     }
     defaultConfig {
         applicationId "com.epam.valkaryne.openmovieapp"
