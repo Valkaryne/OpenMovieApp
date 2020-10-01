@@ -8,7 +8,7 @@ import org.junit.Test
 
 class SearchMoviesUseCaseTest {
 
-    private val mockOpenMovieRepository: OpenMovieRepository = mockk()
+    private val mockOpenMovieRepository: OpenMovieRepository = mockk(relaxed = true)
     private val searchMoviesUseCase = SearchMoviesUseCase(mockOpenMovieRepository)
 
     @Test

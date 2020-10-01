@@ -16,19 +16,5 @@ class ClearQueryHistoryUseCaseTest {
 
         verify { mockQueryRepository.clearRepository() }
     }
-
-    @Test
-    fun `when execute usecase should not call getQueries method`() {
-        clearQueryHistoryUseCase.executeUseCase()
-
-        verify(exactly = 0) { mockQueryRepository.getQueries() }
-    }
-
-    @Test
-    fun `when execute usecase should not call saveQuery method`() {
-        clearQueryHistoryUseCase.executeUseCase()
-
-        verify(exactly = 0) { mockQueryRepository.saveQuery(any()) }
-    }
 }
 

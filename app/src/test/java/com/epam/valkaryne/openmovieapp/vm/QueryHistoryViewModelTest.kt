@@ -20,8 +20,8 @@ class QueryHistoryViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val mockGetQueryHistoryUseCase: GetQueryHistoryUseCase = mockk()
-    private val mockSaveQueryHistoryUseCase: SaveQueryHistoryUseCase = mockk()
-    private val mockClearQueryHistoryUseCase: ClearQueryHistoryUseCase = mockk()
+    private val mockSaveQueryHistoryUseCase: SaveQueryHistoryUseCase = mockk(relaxed = true)
+    private val mockClearQueryHistoryUseCase: ClearQueryHistoryUseCase = mockk(relaxed = true)
 
     private val viewModel = QueryHistoryViewModel(
         mockGetQueryHistoryUseCase,
@@ -32,8 +32,6 @@ class QueryHistoryViewModelTest {
     @Before
     fun `set up`() {
         every { mockGetQueryHistoryUseCase.executeUseCase() } returns listOf(query)
-        every { mockSaveQueryHistoryUseCase.executeUseCase(any()) } returns Unit
-        every { mockClearQueryHistoryUseCase.executeUseCase() } returns Unit
     }
 
     @Test

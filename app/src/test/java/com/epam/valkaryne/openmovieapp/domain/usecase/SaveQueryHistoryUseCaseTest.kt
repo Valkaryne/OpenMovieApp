@@ -18,20 +18,6 @@ class SaveQueryHistoryUseCaseTest {
         verify { mockQueryRepository.saveQuery(queryModel) }
     }
 
-    @Test
-    fun `when execute usecase should not call clearRepository method`() {
-        saveQueryHistoryUseCase.executeUseCase(queryModel)
-
-        verify(exactly = 0) { mockQueryRepository.clearRepository() }
-    }
-
-    @Test
-    fun `when execute usecase should not call getQueries method`() {
-        saveQueryHistoryUseCase.executeUseCase(queryModel)
-
-        verify(exactly = 0) { mockQueryRepository.getQueries() }
-    }
-
     private companion object {
         val queryModel = QueryModel("Tenet", "2020", "movie")
     }
