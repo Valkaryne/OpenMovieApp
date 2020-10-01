@@ -5,7 +5,9 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.epam.valkaryne.openmovieapp.R
@@ -19,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
- * Fragment that shows to user a list of movies which could be found by searching in OMDB API
+ * Fragment that shows to user a list of movies which could be found by searching in OMDb API
  */
 class MovieListFragment : Fragment() {
 
@@ -43,6 +45,13 @@ class MovieListFragment : Fragment() {
 
         configAdapter()
 
+        setFragmentResultListener(SearchDialog.QUERY_MODEL_REQUEST_KEY) { _, bundle ->
+            val result = bundle.get(SearchDialog.QUERY_MODEL_BUNDLE_KEY)
+            if (result is QueryModel) {
+                performSearch(result)
+            }
+        }
+
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -51,7 +60,7 @@ class MovieListFragment : Fragment() {
         super.onViewStateRestored(savedInstanceState)
 
         savedInstanceState?.getParcelable<QueryModel>(LAST_SEARCH_QUERY)?.let { restoredQuery ->
-            searchMovies(restoredQuery)
+            performSearch(restoredQuery)
         }
     }
 
@@ -84,31 +93,9 @@ class MovieListFragment : Fragment() {
     }
 
     private fun showSearchDialog() {
-        SearchDialog.show(
-            parentFragmentManager,
-            object : SearchDialog.OnDialogInteraction {
-                override fun performSearch(queryModel: QueryModel) {
-                    searchMovies(queryModel)
-                    viewModel.saveQueryHistory(queryModel)
-                }
-
-                override fun clearHistory() {
-                    viewModel.clearQueryHistory()
-                }
-            },
-            viewModel.queryHistory
-        )
+        findNavController().navigate(R.id.action_movieListFragment_to_searchDialog)
     }
 
-    private fun searchMovies(queryModel: QueryModel) {
-        searchJob?.cancel()
-        searchJob = lifecycleScope.launch {
-            viewModel.searchMovies(queryModel).collectLatest { movies ->
-                binding.promptTv.isVisible = false
-                adapter.submitData(movies)
-            }
-        }
-    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -120,6 +107,16 @@ class MovieListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         searchJob?.cancel()
+    }
+
+    private fun performSearch(queryModel: QueryModel) {
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            viewModel.searchMovies(queryModel).collectLatest { movies ->
+                binding.promptTv.isVisible = false
+                adapter.submitData(movies)
+            }
+        }
     }
 
     private companion object {

@@ -7,6 +7,15 @@
     <fragment
         android:id="@+id/movie_list_fragment"
         android:name="com.epam.valkaryne.openmovieapp.view.MovieListFragment"
-        tools:layout="@layout/fragment_movie_list"/>
+        tools:layout="@layout/fragment_movie_list">
+        <action
+            android:id="@+id/action_movieListFragment_to_searchDialog"
+            app:destination="@id/searchDialog" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/searchDialog"
+        android:name="com.epam.valkaryne.openmovieapp.view.SearchDialog"
+        tools:layout="@layout/dialog_search" />
 
 </navigation>

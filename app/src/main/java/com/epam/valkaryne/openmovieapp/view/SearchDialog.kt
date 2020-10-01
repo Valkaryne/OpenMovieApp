@@ -6,29 +6,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.LiveData
+import androidx.fragment.app.setFragmentResult
 import com.epam.valkaryne.openmovieapp.R
 import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.databinding.DialogSearchBinding
 import com.epam.valkaryne.openmovieapp.view.adapter.QueryHistoryAdapter
+import com.epam.valkaryne.openmovieapp.vm.QueryHistoryViewModel
+import kotlinx.android.synthetic.main.fragment_movie_list.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Dialog that allows user to input desired search parameters, perform search and clear search history
  */
-class SearchDialog(
-    private val onDialogInteraction: OnDialogInteraction,
-    private val queryHistory: LiveData<List<QueryModel>>
-) : DialogFragment() {
+class SearchDialog : DialogFragment() {
 
-    interface OnDialogInteraction {
-        fun performSearch(queryModel: QueryModel)
-
-        fun clearHistory()
-    }
-
+    private val viewModel: QueryHistoryViewModel by viewModel()
     private val binding: DialogSearchBinding by lazy {
         DialogSearchBinding.inflate(LayoutInflater.from(context))
     }
@@ -56,15 +51,20 @@ class SearchDialog(
                 setAutoCompleteListeners()
 
                 searchPerformButton.setOnClickListener {
+                    val queryModel = assembleQueryModel()
+                    viewModel.saveQueryHistory(queryModel)
+                    setFragmentResult(
+                        QUERY_MODEL_REQUEST_KEY,
+                        bundleOf(QUERY_MODEL_BUNDLE_KEY to queryModel)
+                    )
                     dismiss()
-                    onDialogInteraction.performSearch(assembleQueryModel())
                 }
 
                 searchClearButton.setOnClickListener {
-                    onDialogInteraction.clearHistory()
+                    viewModel.clearQueryHistory()
                 }
 
-                queryHistory.observe(this@SearchDialog, {
+                viewModel.queryHistory.observe(this@SearchDialog, {
                     historyAdapter.items = it
                     searchClearButton.isEnabled = it.isNotEmpty()
                 })
@@ -114,12 +114,7 @@ class SearchDialog(
     }
 
     companion object {
-        fun show(
-            fragmentManager: FragmentManager,
-            onDialogInteraction: OnDialogInteraction,
-            queryHistory: LiveData<List<QueryModel>>
-        ) {
-            SearchDialog(onDialogInteraction, queryHistory).show(fragmentManager, "search_dialog")
-        }
+        const val QUERY_MODEL_REQUEST_KEY = "query_model_request_key"
+        const val QUERY_MODEL_BUNDLE_KEY = "query_model_bundle_key"
     }
 }

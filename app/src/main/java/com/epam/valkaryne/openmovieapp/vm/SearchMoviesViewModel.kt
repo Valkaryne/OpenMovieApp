@@ -18,21 +18,11 @@ import kotlinx.coroutines.flow.Flow
  * ViewModel that works with searching movies in OMDB API
  */
 class SearchMoviesViewModel(
-    private val searchMoviesUseCase: SearchMoviesUseCase,
-    private val getQueryHistoryUseCase: GetQueryHistoryUseCase,
-    private val saveQueryHistoryUseCase: SaveQueryHistoryUseCase,
-    private val clearQueryHistoryUseCase: ClearQueryHistoryUseCase
+    private val searchMoviesUseCase: SearchMoviesUseCase
 ) : ViewModel() {
 
     var lastQuery: QueryModel? = null
         private set
-
-    private val _queryHistory: MutableLiveData<List<QueryModel>> = MutableLiveData()
-    val queryHistory: LiveData<List<QueryModel>>
-        get() {
-            updateQueryHistory()
-            return _queryHistory
-        }
 
     /**
      * Searches movies by query
@@ -43,27 +33,5 @@ class SearchMoviesViewModel(
     fun searchMovies(query: QueryModel): Flow<PagingData<MovieInfo>> {
         lastQuery = query
         return searchMoviesUseCase.executeUseCase(query).cachedIn(viewModelScope)
-    }
-
-    /**
-     * Saves the query in history
-     *
-     * @param query a query to save
-     */
-    fun saveQueryHistory(query: QueryModel) {
-        saveQueryHistoryUseCase.executeUseCase(query)
-    }
-
-    /**
-     * Clears the history of queries
-     */
-    fun clearQueryHistory() {
-        clearQueryHistoryUseCase.executeUseCase()
-        updateQueryHistory()
-    }
-
-    private fun updateQueryHistory() {
-        val history = getQueryHistoryUseCase.executeUseCase()
-        _queryHistory.value = history
     }
 }
