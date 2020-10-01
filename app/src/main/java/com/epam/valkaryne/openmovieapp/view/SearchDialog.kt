@@ -1,5 +1,6 @@
 package com.epam.valkaryne.openmovieapp.view
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
@@ -15,7 +16,6 @@ import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.databinding.DialogSearchBinding
 import com.epam.valkaryne.openmovieapp.view.adapter.QueryHistoryAdapter
 import com.epam.valkaryne.openmovieapp.vm.QueryHistoryViewModel
-import kotlinx.android.synthetic.main.fragment_movie_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -72,6 +72,7 @@ class SearchDialog : DialogFragment() {
         }.create()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setAutoCompleteListeners() {
         with(binding) {
             searchInput.setOnTouchListener { _, motionEvent ->
