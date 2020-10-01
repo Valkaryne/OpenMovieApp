@@ -1,4 +1,4 @@
-package com.epam.valkaryne.openmovieapp.view.adapter
+package com.epam.valkaryne.openmovieapp.common.bindingadapters
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
