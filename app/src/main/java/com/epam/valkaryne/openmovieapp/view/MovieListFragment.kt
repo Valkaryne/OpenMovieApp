@@ -83,9 +83,7 @@ class MovieListFragment : Fragment() {
             binding.list.isVisible = loadState.source.refresh is LoadState.NotLoading
             binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
 
-            val errorState = loadState.source.append as? LoadState.Error
-                ?: loadState.source.prepend as? LoadState.Error
-                ?: loadState.prepend as? LoadState.Error
+            val errorState = loadState.source.refresh as? LoadState.Error
             errorState?.let {
                 Toast.makeText(context, "${it.error.message}", Toast.LENGTH_LONG).show()
             }
