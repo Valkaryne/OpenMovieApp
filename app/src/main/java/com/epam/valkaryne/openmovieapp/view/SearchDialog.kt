@@ -11,6 +11,7 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.Observer
 import com.epam.valkaryne.openmovieapp.R
 import com.epam.valkaryne.openmovieapp.common.QueryModel
 import com.epam.valkaryne.openmovieapp.databinding.DialogSearchBinding
@@ -64,7 +65,7 @@ class SearchDialog : DialogFragment() {
                     viewModel.clearQueryHistory()
                 }
 
-                viewModel.queryHistory.observe(this@SearchDialog, {
+                viewModel.queryHistory.observe(this@SearchDialog, Observer {
                     historyAdapter.items = it
                     searchClearButton.isEnabled = it.isNotEmpty()
                 })
